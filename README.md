@@ -113,14 +113,10 @@
 ## Материалы и компоненты
 ### Ссылки оставлены на магазины
 Полный список компонентов есть в статье https://alexgyver.ru/matrix_guide/
-- NodeMCU http://ali.onl/1dVU http://ali.onl/1dVV
-- Матрицы разные http://ali.ski/pw2ic
-- Лента http://ali.ski/YdfMN
-- Модульная гирлянда http://ali.ski/0h35RR
-- Резисторы http://ali.ski/UEez2
-- БП 5 Вольт http://ali.ski/3cNyj  http://ali.ski/qSKFK
-- MP3 DFPlayer http://ali.onl/1gY1 http://ali.onl/1gY3
-- Динамики http://ali.onl/1h3u http://ali.onl/1h3v
+* Wemos D1 mini https://ali.ski/ul_1UB  https://ali.ski/FErOV
+* Матрица 16x16 https://ali.ski/pOMcck  https://ali.ski/nSJCP  https://ali.ski/hI6tov
+* Адресная лента (для DIY матрицы) https://ali.ski/nyrnD  https://ali.ski/iemq4
+* Powerbank https://ali.ski/l39PK
 
 ## Вам скорее всего пригодится
 * [Всё для пайки (паяльники и примочки)](http://alexgyver.ru/all-for-soldering/)
