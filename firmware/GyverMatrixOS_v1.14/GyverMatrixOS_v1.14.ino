@@ -498,6 +498,42 @@ void setup() {
 
   // Инициализация EEPROM и загрузка сохраненных параметров
   EEPROM.begin(512);
+
+  // Проверяем, что при старте зажата кнопка
+  if(!digitalRead(PIN_BTN)) {
+
+    Serial.println(F("\nКнопка зажата. Ждем 5 секунд.\n"));
+    
+    int cnt = 0;
+    while( cnt++ < 5 ) {
+      
+      if (digitalRead(PIN_BTN)) {
+        Serial.println(F("\nКнопку отпустили.\n"));
+        break;
+      }
+      
+      Serial.print(cnt);
+      Serial.print(".");
+      
+      ESP.wdtFeed();
+      delay(1000);
+    }
+
+    // Если держали 5 и более секунд, загружаем дефолтные настройки 
+    if ( cnt == 6 ) {
+      Serial.println(F("\nСброс настроек\n"));
+      
+      // Устанавливаем параметры Wi-Fi по-умлочанию
+      strcpy(ssid, NETWORK_SSID);
+      strcpy(pass, NETWORK_PASS);
+      setSsid(ssid);
+      setPass(pass);
+
+      // Сбрасываем в дефолт
+      saveDefaults();
+    }
+  }
+
   loadSettings();
 
   // Пинаем генератор случайных чисел
@@ -657,6 +693,50 @@ void startSoftAP() {
     Serial.println(F("Не удалось создать WiFi точку доступа."));
 }
 
+bool startSmartConfig() {
+  Serial.print(F("\nЗапуск режима SmartConfig "));
+
+  // Устанавливаем режим клиента
+  WiFi.mode(WIFI_STA);
+  WiFi.hostname((String("GyverMatrix") +  WiFi.macAddress()).c_str());
+
+  // Отключаем Wi-Fi и забываем настройки
+  WiFi.disconnect(true);
+      
+  WiFi.beginSmartConfig();
+
+  int  smartCount = 0;
+  bool smartDone  = false;
+   
+  while (smartCount++ < 60) { // Пробуем получить настройки 60 раз
+      
+      if (WiFi.smartConfigDone()) {
+        
+        Serial.print(F("\nАвтонастройка успешно завершена \n"));
+        Serial.printf("\tSSID = %s\n"   , WiFi.SSID().c_str());
+        Serial.printf("\tPSK  = %s\n\n" , WiFi.psk().c_str());
+
+        // Сохраняем SSID и пароль, присланный из приложения
+        setSsid(WiFi.SSID());
+        setPass(WiFi.psk());
+        
+        // Сбрасываем настройки IP для активации DHCP
+        saveStaticIP(0, 0, 0, 0);
+        
+        return true;
+      }
+      
+      ESP.wdtFeed();
+      delay(500);
+      Serial.print(".");
+    }
+
+    WiFi.stopSmartConfig();
+    Serial.print(F("\nАвтонастройка не удалась\n"));
+    ESP.wdtFeed();
+    return false;
+}
+
 void printNtpServerName() {
   Serial.print(F("NTP-сервер "));
   Serial.print(ntpServerName);
@@ -668,11 +748,20 @@ void connectToNetwork() {
   // Подключиться к WiFi сети
   startWiFi();
 
-  // Если режим точки тоступане используется и к WiFi сети подключиться не удалось - создать точку доступа
+  
   if (!wifi_connected) {
-    WiFi.mode(WIFI_AP);
-    startSoftAP();
+
+    // Пробуем получить настройки через ESP8255 SmartConfig
+    if (startSmartConfig()) {
+      // Удалось, поднимаем Wi-Fi
+      startWiFi();
+    } else {
+      // Если режим точки доступа не используется и к WiFi сети подключиться не удалось - создать точку доступа
+      WiFi.mode(WIFI_AP);
+      startSoftAP();
+    }
   }
+  
 
   if (useSoftAP && !ap_connected) startSoftAP();
 
