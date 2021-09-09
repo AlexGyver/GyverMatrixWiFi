@@ -116,12 +116,12 @@
 ## Материалы и компоненты
 ### Ссылки оставлены на магазины
 Полный список компонентов есть в статье https://alexgyver.ru/matrix_guide/
-* Wemos D1 mini https://ali.ski/ul_1UB  https://ali.ski/FErOV
-* Матрица 16x16 https://ali.ski/pOMcck  https://ali.ski/nSJCP  https://ali.ski/hI6tov
+* Wemos D1 mini https://ali.ski/7YQjnP  https://ali.ski/mS4uV
+* Матрица 16x16 https://ali.ski/nMUjQ  https://ali.ski/sxLSCq  https://ali.ski/VY74Hr
 * Матрица 16х16 купить в России https://www.giant4.ru/%D0%BC%D0%B0%D1%82%D1%80%D0%B8%D1%86%D0%B0-ws2812b-16x16-led.html?utm_source=gyver-site&utm_medium=article&utm_campaign=lamp-matrix
-* Адресная лента (для DIY матрицы) https://ali.ski/nyrnD  https://ali.ski/iemq4
+* Адресная лента (для DIY матрицы) https://ali.ski/-moqm  https://ali.ski/_Q_YlE
 * Лента купить в России https://www.giant4.ru/ws2812b-60-ip33.html?utm_source=gyver-site&utm_medium=article&utm_campaign=spi-strip
-* Powerbank https://ali.ski/l39PK
+* Powerbank https://ali.ski/_Sb4J
 
 ## Вам скорее всего пригодится
 * [Всё для пайки (паяльники и примочки)](http://alexgyver.ru/all-for-soldering/)
